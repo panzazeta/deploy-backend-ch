@@ -1,0 +1,25 @@
+Diccionario de errores más comunes:
+*Errores de autorización/autenticación:
+return res.status(401).send({ error: 'User no autorizado' })
+return res.status(403).send({ error: 'Usuario no tiene los permisos necesarios' })
+
+*Errores de productos:
+-Producto no encontrado en la BD (método GET)
+
+-Producto no existente dentro del cart (en métodos PUT y DELETE)
+res.status(404).send({ respuesta: 'Error al actualizar/eliminar producto en el Carrito', mensaje: 'Product Not Found in Cart' })
+
+-Error al crear un producto (método POST), sea por:
+--datos faltantes (title, description, price, stock, category, y code son required:true)
+--tipo de dato incorrecto (por ejemplo, introduciendo un string en el campo price
+--code duplicado (debe ser único)
+
+*Errores de carrito:
+-Si se intenta modificar/eliminar productos en un carrito inexistente:
+res.status(404).send({ respuesta: 'Error en actualizar/eliminar productos del carrito', mensaje: 'Cart Not Found' });
+
+*Errores de checkout:
+-Si se intenta realizar un checkout de un cart inexistente:
+return res.status(404).send({ respuesta: 'Error en Checkout', mensaje: 'Cart Not Found' });
+-Si se intenta realizar un checkout de productos inexistentes:
+return res.status(404).send({ respuesta: 'Error en finalizar compra', mensaje: 'Product Not Found' })
